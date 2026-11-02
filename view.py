@@ -14,7 +14,6 @@ import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 from config import RUNS_DIR
-from workspace import free_port
 
 
 def latest_run() -> str:
@@ -45,11 +44,10 @@ def open_run(run_id: str, with_app: bool = True) -> None:
     app = run_dir / "app"
     if not (app / "dist" / "index.html").exists():
         sys.exit(f"No built app in {app / 'dist'}: the run did not pass the build stage.")
-    port = free_port()
-    url = f"http://localhost:{port}"
     # dist/ is a static build, so Python's own server is enough: no Node or npm install needed to view a run.
     handler = functools.partial(QuietHandler, directory=str(app / "dist"))
-    server = ThreadingHTTPServer(("127.0.0.1", port), handler)
+    server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    url = f"http://localhost:{server.server_address[1]}"
     threading.Thread(target=server.serve_forever, daemon=True).start()
     print(f"Web app:    {url}   (log in with the Quick login cards; EN | MN in the header)")
     print("Press Ctrl+C to stop the app.")
