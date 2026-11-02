@@ -219,14 +219,28 @@ Open the Studio link it prints (`https://smith.langchain.com/studio/?baseUrl=htt
 
 ## 6. Self-correction demo: inject a bug
 
-1. Break something in a finished run's app. For example, in `runs/<run_id>/app/src/lib/pricing.ts`, change the `+` that adds the cleaning fee into `-`.
-2. Run:
-   ```bash
-   python repair.py <run_id>
-   python logs.py <run_id> --fixes
-   ```
+One command copies a finished run, breaks the price rule in the copy (`+ cleaningFee` becomes `- cleaningFee`) and hands it to QA and the fixer:
 
-The factory reads the files from disk and starts at QA. A test fails, the fixer agent reads the failing output and the relevant files, edits them, re-runs the checks itself, and QA passes again. The fix and the lesson it learned appear in the log, the report and the dashboard. In our tests the pricing bug was fixed in one loop for about $0.07.
+```bash
+python repair.py <run_id> --demo
+python logs.py <new_run_id> --fixes     # the command prints the new run id
+```
+
+```
+Injected bug in src/lib/pricing.ts:37
+    before: const total = num(days) * num(dailyRate) + num(cleaningFee);
+    after:  const total = num(days) * num(dailyRate) - num(cleaningFee);
+
+qa_agent      test report: FAIL (build:ok, unit:FAIL)
+fixer_agent   fix loop 1/5   claude-sonnet-5-5   $0.091
+  why:    calcTotal subtracted the cleaning fee instead of adding it, so totals were 230 instead of 280. ...
+  lesson: Check pricing formulas against the spec's worked example, including the sign of every term. ...
+qa_agent      test report: PASS (build:ok, unit:ok, e2e:ok)
+```
+
+The fixer agent reads the failing output and the relevant files, edits them, re-runs the checks itself and finishes; QA then passes again. In our test it took 25 seconds and $0.09. The fix and the lesson it learned appear in the log, the report and the dashboard. The original run is left untouched.
+
+To break something else, edit any file under `runs/<run_id>/app/src/` or `app/e2e/` and run `python repair.py <run_id>` (this repairs that run in place).
 
 ---
 
