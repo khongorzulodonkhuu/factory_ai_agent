@@ -1,0 +1,12 @@
+.env
+# Runs stay local except the example run judges open with view.py
+runs/*
+!runs/20261102-155204-a05d/
+runs/*/app/node_modules
+runs/*/app/test-results/
+app_template/node_modules/
+app_template/dist/
+app_template/test-results/
+__pycache__/
+.langgraph_api/
+.DS_Store

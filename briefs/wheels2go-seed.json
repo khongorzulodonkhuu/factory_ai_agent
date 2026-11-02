@@ -1,0 +1,102 @@
+{
+  "users": [
+    {
+      "id": "usr_101",
+      "name": "Sarah Jenkins",
+      "email": "sarah.j@example.com",
+      "role": "owner",
+      "avatar_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+    },
+    {
+      "id": "usr_102",
+      "name": "Alex Rivera",
+      "email": "alex.rivera@example.com",
+      "role": "renter",
+      "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
+    }
+  ],
+  "cars": [
+    {
+      "id": "car_01",
+      "owner_id": "usr_101",
+      "title": "Tesla Model Y Long Range 2023",
+      "brand": "Tesla",
+      "model": "Model Y",
+      "year": 2023,
+      "daily_rate": 85,
+      "cleaning_fee": 25,
+      "location": {
+        "city": "Miami",
+        "state": "FL",
+        "pickup_address": "Miami International Airport Hub - Zone B"
+      },
+      "specs": {
+        "seats": 5,
+        "fuel_type": "Electric",
+        "transmission": "Automatic"
+      },
+      "image_url": "https://images.unsplash.com/photo-1560958089-b8a1929cea89",
+      "status": "available"
+    },
+    {
+      "id": "car_02",
+      "owner_id": "usr_101",
+      "title": "Ford Bronco Wildtrak 4x4",
+      "brand": "Ford",
+      "model": "Bronco",
+      "year": 2022,
+      "daily_rate": 110,
+      "cleaning_fee": 35,
+      "location": {
+        "city": "Denver",
+        "state": "CO",
+        "pickup_address": "Downtown Denver Garage - 14th St"
+      },
+      "specs": {
+        "seats": 5,
+        "fuel_type": "Gasoline",
+        "transmission": "Automatic"
+      },
+      "image_url": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf",
+      "status": "available"
+    },
+    {
+      "id": "car_03",
+      "owner_id": "usr_101",
+      "title": "BMW M3 Competition 2021",
+      "brand": "BMW",
+      "model": "M3",
+      "year": 2021,
+      "daily_rate": 140,
+      "cleaning_fee": 40,
+      "location": {
+        "city": "Los Angeles",
+        "state": "CA",
+        "pickup_address": "LAX Express Pickup Lot"
+      },
+      "specs": {
+        "seats": 5,
+        "fuel_type": "Gasoline",
+        "transmission": "Automatic"
+      },
+      "image_url": "https://images.unsplash.com/photo-1555215695-3004980adade",
+      "status": "available"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "book_301",
+      "renter_id": "usr_102",
+      "car_id": "car_01",
+      "start_date": "2026-11-10",
+      "end_date": "2026-11-13",
+      "days": 3,
+      "daily_rate": 85,
+      "cleaning_fee": 25,
+      "total_price": 280,
+      "pickup_location": "Miami International Airport Hub - Zone B",
+      "status": "confirmed",
+      "created_at": "2026-10-28T14:32:00Z"
+    }
+  ]
+}

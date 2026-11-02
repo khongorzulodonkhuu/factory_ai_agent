@@ -1,0 +1,10 @@
+# Skill: architecture (architect agent)
+- Plan files so independent coders can write them in parallel without seeing each other's code.
+- Required: src/types.ts (all domain types), src/data/seed.json, pure logic in src/lib/*.ts (pricing, filtering, store/persistence with no React), React components in src/components/*.tsx, src/App.tsx (role switcher + views). Aim for 8-14 files.
+- Keep every file small enough for one coder to finish quickly: src/App.tsx holds only shared state, login/role switching and which view is shown. The header (menus, dropdowns, account menu, language toggle) is its own file src/components/Header.tsx and the footer is src/components/Footer.tsx; App.tsx passes them the current user, view and callbacks as props.
+- Give exact TypeScript export signatures; they are the contract between coders and tests.
+- Plan a login screen for role-based apps (see react-tailwind skill) and include its controls in the ui_contract: login-screen, one button per role named with the real role in lowercase kebab-case (e.g. login-as-owner, login-as-renter; for roles Host/Guest: login-as-host, login-as-guest), current-user, logout-btn.
+- ui_contract: one data-testid for every element the test requirements touch: role switch buttons, form fields, submit buttons, cards, filter inputs, date inputs, price summary fields, booking rows, status badges, approve/decline buttons. Repeated elements share one test id and carry identifying text inside. Range sliders get no filter test id; the number input bound to the same value carries it. Featured/promoted cards use a different test id from catalog cards.
+- Status values shown in the UI use Title Case (Pending, Confirmed, Cancelled, Completed).
+- The scaffold already provides src/status.tsx (<StatusBadge status=... />), src/icons.tsx (<Icon name=... />) and src/i18n.tsx (useT, useMoney, <LanguageToggle /> for the header) and src/i18n/mn.json; never plan those files. Components translate their own text with useT().
+- unit_test_targets: one entry per pure function, written exactly as "src/lib/<file>.ts: <functionName>" (one unit test writer per file works from these).
